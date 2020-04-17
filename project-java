@@ -12,7 +12,8 @@ interface Sounds {
 
 /* Abstrakcja jest używana dla zwiększenia bezpieczeństwa, obiekty mogą być tworzone tylko jeśli inna klasa dziedziczy po klasie
        abstrakcyjnej. Poniższe trzy klasy implementują funkcje zawarte w powyższych interfejsach (oprócz WhatsYourName, która jest
-       implementowana dopiero w klasach dziedziczących po poniższych trzech klasach abstrakcyjnych */
+       implementowana dopiero w klasach dziedziczących po poniższych trzech klasach abstrakcyjnych) korzystając z polimorfizmu, tak aby wywołując 
+        np. "nazwa obiektu".sound() otrzymywać odpowiednie wyniki w zależności po jakiej klasie dziedziczy dany obiekt.*/
 abstract class StringedInstruments implements MusicalInstruments, Sounds {
     public String HowToPlay () {
         return " makes sound when strings are plucked, bowed or struck.";
