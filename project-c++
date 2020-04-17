@@ -1,0 +1,203 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+/* interfejsy uzyskuje się za pomocą abstrakcyjnych klas - służą zwiekszeniu bezpieczeństwa danych, dostep do zawartych danych
+   osiąga się przez implementowanie ich w dziedziczącej klasie */
+class MusicalInstruments {
+    public:
+    virtual void WhatsYourName() = 0;
+    virtual void WhatKindOfInstrumentAreYou() = 0;
+};
+
+class Sounds {
+    public:
+    virtual void sound() = 0;
+    virtual void HowToPlay() = 0;
+};
+
+/* Poniższe trzy klasy dziedziczą po dwóch powyższych i implementują ich funkcje (oprócz WhatsYourName, która jest impelementowana 
+dopiero w klasach dziedziczących po trzech poniższych */
+
+class StringedInstruments: public MusicalInstruments, Sounds {
+    public:
+    void HowToPlay () {
+        cout << " makes sound when strings are plucked, bowed or struck." << endl;
+    }
+    void sound () {
+        cout << "Each string has a different frequency. The desired frequency can be obtained by adjusting the tension on the string." << endl;
+    }
+    void WhatKindOfInstrumentAreYou () {
+        cout << "I'm a stringed instrument." << endl;
+    }
+};
+
+class BrassInstruments: public MusicalInstruments, Sounds {
+public:
+    void sound () {
+        cout << "The sound happens when the air vibrates inside the instrument." << endl;
+    }
+    void HowToPlay () {
+        cout << " makes sound when air is blown inside the instrument." << endl;
+    }
+    void WhatKindOfInstrumentAreYou () {
+        cout << "I'm a brass instrument." << endl;
+    }
+};
+
+class PercussionInstruments: public MusicalInstruments, Sounds {
+public:
+    void sound () {
+        cout << "Pitch, tone, and volume of the instrument depend on the skill of the performer." << endl;
+    }
+    void HowToPlay () {
+        cout << " makes sounds when it is hit." << endl;
+    }
+    void WhatKindOfInstrumentAreYou () {
+        cout << "I'm a percussion instrument." << endl;
+    }
+};
+
+
+
+class Guitar: public StringedInstruments {
+private:
+    /* klasa Guitar dziedziczy po klasie StringedInstruments, co pozwala np. używać funkcji sound oraz WhatKindOfInstrumentAreYou
+     bez powtórnej implementacji */
+    string Name = "Guitar";
+    string Brand = "Rickenbacker";
+    /* hermetyzacja za pomocą private, nie można użyć Brand (nie ma żadnej metody GetBrand) - użytkownik nie ma dostępu do informacji
+     zawartej w tej danej */
+    public:
+    void GetName () {
+        cout << Name;
+    }
+    void HowToPlay () {
+        cout << " makes sound when strings are plucked." << endl;
+        // zmiana body funckji (korzystanie z polimorfizmu), tak aby potem jedna funkcja wypisywała inne rzeczy z zależności od obiektu
+    }
+    void WhatsYourName () {
+        cout << "My name is " << Name << "." << endl;
+        // zmiana body funckji (korzystanie z polimorfizmu), tak aby potem jedna funkcja wypisywała inne rzeczy z zależności od obiektu
+    }
+};
+
+class Cello: public StringedInstruments {
+private:
+    /* klasa Cello dziedziczy po klasie StringedInstruments, co pozwala np. używać funkcji sound oraz WhatKindOfInstrumentAreYou
+     bez powtórnej implementacji */
+    string Name = "Cello";
+    /* hermetyzacja za pomocą private, nie można użyć Brand (nie ma żadnej metody GetBrand) - użytkownik nie ma dostępu do informacji
+     zawartej w tej danej */
+    public:
+    void GetName () {
+        cout << Name;
+    }
+    void HowToPlay () {
+        cout << " makes sound when strings are bowed." << endl;
+        // zmiana body funckji (korzystanie z polimorfizmu), tak aby potem jedna funkcja wypisywała inne rzeczy z zależności od obiektu
+    }
+    void WhatsYourName () {
+        cout << "My name is " << Name << "." << endl;
+        // zmiana body funckji (korzystanie z polimorfizmu), tak aby potem jedna funkcja wypisywała inne rzeczy z zależności od obiektu
+    }
+};
+
+class Drum: public PercussionInstruments {
+    /* klasa Drum dziedziczy po klasie PercussionInstruments, co pozwala np. używać funkcji sound, WhatKindOfInstrumentAreYou
+     oraz HowToPlay bez powtórnej implementacji */
+private:
+    string Name = "Drum";
+    /* hermetyzacja za pomocą private, nie można użyć Name bez poniższej metody GetName - służy to zwiększeniu bezpieczeństwa i kontroli nad
+     danymi, które są przechowywane w danej klasie */
+public:
+    void GetName () {
+        cout << Name;
+    }
+    void WhatsYourName () {
+        cout << "My name is " << Name << "." << endl;
+    }
+};
+
+class Trumpet: public BrassInstruments {
+    /* klasa Trumpet dziedziczy po klasie BrassInstruments, co pozwala np. używać funkcji sound, WhatKindOfInstrumentAreYou
+     oraz HowToPlay bez powtórnej implementacji */
+private:
+    string Name = "Trumpet";
+public:
+    void GetName () {
+        cout << Name;
+    }
+    void WhatsYourName () {
+        cout << "My name is " << Name << "." << endl;
+    }
+};
+
+class Cornet: public BrassInstruments {
+    /* klasa Trumpet dziedziczy po klasie BrassInstruments, co pozwala np. używać funkcji sound, WhatKindOfInstrumentAreYou
+     oraz HowToPlay bez powtórnej implementacji */
+private:
+    string Name = "Cornet";
+public:
+    void GetName () {
+        cout << Name;
+    }
+    void WhatsYourName () {
+        cout << "My name is " << Name << "." << endl;
+    }
+};
+
+
+
+
+
+
+
+
+int main () {
+
+        Guitar guitar;
+        Cello cello;
+        Trumpet trumpet;
+        Drum drum;
+        Cornet cornet;
+
+        guitar.WhatsYourName();
+        guitar.WhatKindOfInstrumentAreYou();
+        guitar.GetName();
+        guitar.HowToPlay();
+        guitar.sound();
+        cout << endl;
+
+        trumpet.WhatsYourName();
+        trumpet.WhatKindOfInstrumentAreYou();
+        trumpet.GetName();
+        trumpet.HowToPlay();
+        trumpet.sound();
+        cout << endl;
+
+        cello.WhatsYourName();
+        cello.WhatKindOfInstrumentAreYou();
+        cello.GetName();
+        cello.HowToPlay();
+        cello.sound();
+        cout << endl;
+
+        drum.WhatsYourName();
+        drum.WhatKindOfInstrumentAreYou();
+        drum.GetName();
+        drum.HowToPlay();
+        drum.sound();
+        cout << endl;
+
+        cornet.WhatsYourName();
+        cornet.WhatKindOfInstrumentAreYou();
+        cornet.GetName();
+        cornet.HowToPlay();
+        cornet.sound();
+
+
+
+return 0;
+}
