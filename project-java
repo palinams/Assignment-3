@@ -1,0 +1,174 @@
+/* interfejsy podobnie jak abstrakcyjne klasy służą zwiekszeniu bezpieczeństwa danych, dostep do zawartych danych osiąga się przez
+   inplementowanie ich w dziedziczącej klasie (przy czym jedna klasa może dziedziczyć po kilku interfejsach, a tylko po jednej klasie) */
+interface MusicalInstruments {
+    public void WhatsYourName();
+    public void WhatKindOfInstrumentAreYou();
+}
+
+interface Sounds {
+    public void sound();
+    public String HowToPlay();
+}
+
+/* Abstrakcja jest używana dla zwiększenia bezpieczeństwa, obiekty mogą być tworzone tylko jeśli inna klasa dziedziczy po klasie
+       abstrakcyjnej. Poniższe trzy klasy implementują funkcje zawarte w powyższych interfejsach (oprócz WhatsYourName, która jest
+       implementowana dopiero w klasach dziedziczących po poniższych trzech klasach abstrakcyjnych */
+abstract class StringedInstruments implements MusicalInstruments, Sounds {
+    public String HowToPlay () {
+        return " makes sound when strings are plucked, bowed or struck.";
+    }
+    public void sound () {
+        System.out.println("Each string has a different frequency. The desired frequency can be obtained by adjusting the tension on the string.");
+    }
+    public void WhatKindOfInstrumentAreYou () {
+        System.out.println("I'm a stringed instrument.");
+    }
+}
+
+abstract class BrassInstruments implements MusicalInstruments, Sounds {
+    public void sound () {
+        System.out.println("The sound happens when the air vibrates inside the instrument.");
+    }
+    public String HowToPlay () {
+        return " makes sound when air is blown inside the instrument.";
+    }
+    public void WhatKindOfInstrumentAreYou () {
+        System.out.println("I'm a brass instrument.");
+    }
+}
+abstract class PercussionInstruments implements MusicalInstruments, Sounds {
+    public void sound () {
+        System.out.println("Pitch, tone, and volume of the instrument depend on the skill of the performer.");
+    }
+    public String HowToPlay () {
+        return " makes sounds when it is hit.";
+    }
+    public void WhatKindOfInstrumentAreYou () {
+        System.out.println("I'm a percussion instrument.");
+    }
+}
+
+class Guitar extends StringedInstruments {
+    /* klasa Guitar dziedziczy po klasie StringedInstruments, co pozwala np. używać funkcji sound oraz WhatKindOfInstrumentAreYou
+     bez powtórnej implementacji */
+    private String Name = "Guitar";
+    private String Brand = "Rickenbacker";
+    /* hermetyzacja za pomocą private, nie można użyć Brand (nie ma żadnej metody GetBrand) - użytkownik nie ma dostępu do informacji
+     zawartej w tej danej */
+    public String GetName () {
+        return Name;
+    }
+    public String HowToPlay () {
+        return " makes sound when strings are plucked.";
+        // zmiana body funckji (korzystanie z polimorfizmu), tak aby potem jedna funkcja wypisywała inne rzeczy z zależności od obiektu
+    }
+    public void WhatsYourName () {
+        System.out.println("My name is " + Name.toLowerCase() + ".");
+        // zmiana body funckji (korzystanie z polimorfizmu), tak aby potem jedna funkcja wypisywała inne rzeczy z zależności od obiektu
+    }
+}
+
+class Cello extends StringedInstruments {
+    /* klasa Cello dziedziczy po klasie StringedInstruments, co pozwala np. używać funkcji sound oraz WhatKindOfInstrumentAreYou
+     bez powtórnej implementacji */
+    private String Name = "Cello";
+    /* hermetyzacja za pomocą private, nie można użyć Name bez poniższej metody GetName - służy to zwiększeniu bezpieczeństwa i kontroli nad
+     danymi, które są przechowywane w danej klasie */
+    public String GetName () {
+        return Name;
+    }
+    public String HowToPlay () {
+        return " makes sound when strings are bowed.";
+        // zmiana body funckji (korzystanie z polimorfizmu), tak aby potem jedna funkcja wypisywała inne rzeczy z zależności od obiektu
+    }
+    public void WhatsYourName () {
+        System.out.println("My name is " + Name.toLowerCase() + ".");
+        // zmiana body funckji (korzystanie z polimorfizmu), tak aby potem jedna funkcja wypisywała inne rzeczy z zależności od obiektu
+    }
+}
+
+class Drum extends PercussionInstruments {
+    /* klasa Drum dziedziczy po klasie PercussionInstruments, co pozwala np. używać funkcji sound, WhatKindOfInstrumentAreYou
+     oraz HowToPlay bez powtórnej implementacji */
+    private String Name = "Drum";
+    /* hermetyzacja za pomocą private, nie można użyć Name bez poniższej metody GetName - służy to zwiększeniu bezpieczeństwa i kontroli nad
+     danymi, które są przechowywane w danej klasie */
+    public String GetName () {
+        return Name;
+    }
+    public void WhatsYourName () {
+        System.out.println("My name is " + Name.toLowerCase() + ".");
+    }
+}
+
+class Trumpet extends BrassInstruments {
+    /* klasa Trumpet dziedziczy po klasie BrassInstruments, co pozwala np. używać funkcji sound, WhatKindOfInstrumentAreYou
+     oraz HowToPlay bez powtórnej implementacji */
+    private String Name = "Trumpet";
+    public String GetName () {
+        return Name;
+    }
+    public void WhatsYourName () {
+        System.out.println("My name is " + Name.toLowerCase() + ".");
+    }
+}
+
+class Cornet extends BrassInstruments {
+    /* klasa Trumpet dziedziczy po klasie BrassInstruments, co pozwala np. używać funkcji sound, WhatKindOfInstrumentAreYou
+     oraz HowToPlay bez powtórnej implementacji */
+    private String Name = "Cornet";
+    public String GetName () {
+        return Name;
+    }
+    public void WhatsYourName () {
+        System.out.println("My name is " + Name.toLowerCase() + ".");
+    }
+}
+
+
+
+
+
+public class objects {
+
+    public static void main(String[] args) {
+        Guitar guitar = new Guitar();
+        Cello cello = new Cello();
+        Trumpet trumpet = new Trumpet();
+        Drum drum = new Drum();
+        Cornet cornet = new Cornet();
+
+        guitar.WhatsYourName();
+        guitar.WhatKindOfInstrumentAreYou();
+        System.out.println(guitar.GetName() + guitar.HowToPlay());
+        guitar.sound();
+        System.out.println();
+
+        cello.WhatsYourName();
+        cello.WhatKindOfInstrumentAreYou();
+        System.out.println(cello.GetName() + cello.HowToPlay());
+        cello.sound();
+        System.out.println();
+
+        trumpet.WhatsYourName();
+        trumpet.WhatKindOfInstrumentAreYou();
+        System.out.println(trumpet.GetName() + trumpet.HowToPlay());
+        trumpet.sound();
+        System.out.println();
+
+        drum.WhatsYourName();
+        drum.WhatKindOfInstrumentAreYou();
+        System.out.println(drum.GetName() + drum.HowToPlay());
+        drum.sound();
+        System.out.println();
+
+        cornet.WhatsYourName();
+        cornet.WhatKindOfInstrumentAreYou();
+        System.out.println(cornet.GetName() + cornet.HowToPlay());
+        cornet.sound();
+
+
+    }
+
+
+}
